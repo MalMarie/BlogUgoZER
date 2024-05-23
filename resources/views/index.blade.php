@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Laravel</title>
+    <title>Blog UgoZER</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
@@ -15,9 +15,11 @@
     @vite('resources/css/app.css')
 </head>
 
-<body>
+<body class="bg-slate-100">
+    <div id="header"></div>
+    <div id="nav"></div>
     <div id="app"></div>
-    <p>Test!</p>
+    <div id="footer"></div>
     @vite('resources/js/app.js')
     <script src="{{ mix('js/app.js') }}"></script>
 </body>
