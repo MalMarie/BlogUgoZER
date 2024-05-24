@@ -1,3 +1,9 @@
 @extends('base')
 
-@section('articles', 'Tous les articles')
+@section('title', 'Tous les articles')
+
+@section('articles')
+
+<div id="articles"></div>
+
+@endsection

@@ -19,7 +19,8 @@
     @include('partials.header')
     @include('partials.nav')
     <main>
-
+        @yield('index')
+        @yield('articles')
     </main>
     @include('partials.footer')
     @vite('resources/js/app.js')

@@ -40,7 +40,7 @@ export default {
                 const response = await axios.get(
                     "http://localhost:8000/api/latest-articles"
                 );
-                this.lastArticles = response.data[0].original;
+                this.lastArticles = response.data;
                 console.log("liste des articles", this.lastArticles);
             } catch (error) {
                 console.error(

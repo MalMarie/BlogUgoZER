@@ -38,9 +38,9 @@ export default {
         async fetcharticles() {
             try {
                 const response = await axios.get(
-                    "http://localhost:8000/api/latest-articles"
+                    "http://localhost:8000/api/all-articles"
                 );
-                this.articles = response.data[0].original;
+                this.articles = response.data;
                 console.log("liste des articles", this.articles);
             } catch (error) {
                 console.error(
