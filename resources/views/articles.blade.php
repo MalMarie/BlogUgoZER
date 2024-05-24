@@ -4,6 +4,7 @@
 
 @section('articles')
 
-<div id="articles"></div>
+
+<div class="w-3/4 m-auto" id="articles"></div>
 
 @endsection

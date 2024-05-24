@@ -36,7 +36,11 @@ class ArticleController extends Controller // implements HasMiddleware
     public function showAll()
     {
         $articles = Article::all();
-        return response()->json($articles);
+        $articleCount = $articles->count();
+        return response()->json([
+            'articles' => $articles,
+            'total' => $articleCount
+        ]);
     }
 
     /**
