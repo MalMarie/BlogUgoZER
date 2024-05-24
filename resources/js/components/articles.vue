@@ -11,7 +11,7 @@
             >
                 <h2 class="text-xl text-bold mt-3 pb-3">{{ article.title }}</h2>
                 <p class="text-sm italic absolute top-3 right-3">
-                    {{ article.category }}
+                    {{ article.category }} | {{ formatDate(article.created_at) }}
                 </p>
                 <p>{{ article.content }}</p>
             </div>
@@ -23,6 +23,8 @@
 </template>
 
 <script>
+import { format } from "date-fns";
+
 import axios from "axios";
 
 export default {
@@ -48,6 +50,9 @@ export default {
                     error
                 );
             }
+        },
+        formatDate(date) {
+            return format(new Date(date), "dd MMMM yyyy");
         },
     },
 };
