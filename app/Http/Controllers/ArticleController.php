@@ -17,15 +17,26 @@ class ArticleController extends Controller // implements HasMiddleware
      */
     public function index()
     {
+        return view('index');
+    }
 
+    public function allArticles()
+    {
+        return view('articles');
+    }
+
+    // Méthode pour l'API pour récupérer les 5 derniers articles
+    public function showLastFive()
+    {
+        $lastArticles = Article::orderBy('created_at', 'desc')->take(5)->get();
+        return response()->json($lastArticles);
+    }
+
+        // Méthode pour l'API pour récupérer tous les articles
+    public function showAll()
+    {
         $articles = Article::all();
-        // dump($articles->title);
-        return [
-            response()->json($articles),
-            view('index', [
-                'articles' => $articles
-            ])
-        ];
+        return response()->json($articles);
     }
 
     /**

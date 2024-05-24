@@ -3,5 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ArticleController;
 
-Route::resource('articles', ArticleController::class);
-Route::get('/api/articles', [ArticleController::class, 'getAllArticles']);
+
+// Route::resource('articles', ArticleController::class);
+Route::get('/all-articles', [ArticleController::class, 'showAll']);
+Route::get('/latest-articles', [ArticleController::class, 'showLastFive']);

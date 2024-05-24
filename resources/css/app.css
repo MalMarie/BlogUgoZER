@@ -4,6 +4,20 @@
 
 body {
     height: 100vw;
-
     margin: 10px;
+    background-color: #F9FAFB;
+}
+
+div.overflow-y-auto::-webkit-scrollbar {
+    width: 10px;
+}
+
+div.overflow-y-auto::-webkit-scrollbar-track {
+    background: #F9FAFB;
+    border-radius: 8px;
+}
+
+div.overflow-y-auto::-webkit-scrollbar-thumb {
+    background: #525252; 
+    border-radius: 9px;
 }

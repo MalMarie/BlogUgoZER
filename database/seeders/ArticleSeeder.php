@@ -19,12 +19,14 @@ class ArticleSeeder extends Seeder
 
         $categories = ['Ville', 'Campagne', 'Urbain', 'Loft', 'Perle', 'Astuces'];
 
-        Article::factory()->create([
-            'title' => $faker->sentence(),
-            'content' => $faker->paragraphs(rand(1,7), true),
-            'category' => $faker->randomElement($categories),
-            'image_url' => 'https://unsplash.com/photos/' . implode('-', $faker->words(5)),
-            'created_at' => now(),
-        ]);
+        for ($i = 0; $i < 5; $i++) {
+            Article::factory()->create([
+                'title' => $faker->sentence(),
+                'content' => $faker->paragraphs(rand(1, 7), true),
+                'category' => $faker->randomElement($categories),
+                'image_url' => 'https://unsplash.com/photos/' . implode('-', $faker->words(5)),
+                'created_at' => now(),
+            ]);
+        }
     }
 }
