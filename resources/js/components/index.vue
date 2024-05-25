@@ -8,10 +8,14 @@
                 class="relative w-full max-w-96 bg-blue-600 m-4 p-4 rounded border-zinc-50 h-full max-h-80 overflow-y-auto shadow-lg text-slate-50"
                 v-for="(article, index) in lastArticles"
                 :key="index"
+                @click="goToArticle(article.url)"
             >
-                <h2 class="text-xl text-bold mt-5 pb-3">{{ article.title }}</h2>
+                <h2 class="text-xl text-bold mt-5 pb-3">
+                    {{ article.title }}
+                </h2>
                 <p class="text-sm italic absolute top-3 right-3">
-                    {{ article.category }} | {{ formatDate(article.created_at) }}
+                    {{ article.category }} |
+                    {{ formatDate(article.created_at) }}
                 </p>
                 <p>{{ article.content }}</p>
             </div>
@@ -53,6 +57,9 @@ export default {
         },
         formatDate(date) {
             return format(new Date(date), "dd MMMM yyyy");
+        },
+        goToArticle(url) {
+            window.location.href = url;
         },
     },
 };

@@ -28,6 +28,7 @@
     <main>
         @yield('index')
         @yield('articles')
+        @yield('article')
     </main>
     @include('partials.footer')
     @vite('resources/js/app.js')

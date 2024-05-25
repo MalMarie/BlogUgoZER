@@ -22,25 +22,16 @@ class ArticleController extends Controller // implements HasMiddleware
 
     public function allArticles()
     {
-        return view('articles');
+        return view('articles.articles');
     }
 
-    // Méthode pour l'API pour récupérer les 5 derniers articles
-    public function showLastFive()
+    /**
+     * Méthode pour afficher un seul article.
+     */
+    public function show(string $id)
     {
-        $lastArticles = Article::orderBy('created_at', 'desc')->take(5)->get();
-        return response()->json($lastArticles);
-    }
-
-        // Méthode pour l'API pour récupérer tous les articles
-    public function showAll()
-    {
-        $articles = Article::all();
-        $articleCount = $articles->count();
-        return response()->json([
-            'articles' => $articles,
-            'total' => $articleCount
-        ]);
+        $article = Article::take($id)->get();
+        return view('article');
     }
 
     /**
@@ -60,11 +51,53 @@ class ArticleController extends Controller // implements HasMiddleware
     }
 
     /**
-     * Display the specified resource.
+     * Méthode pour l'API pour récupérer les 5 derniers articles
      */
-    public function show(string $id)
+    public function showLastFive()
     {
-        //
+        $lastArticles = Article::orderBy('created_at', 'desc')->take(5)->get()->map(function ($article) {
+            return [
+                'id' => $article->id,
+                'title' => $article->title,
+                'content' => $article->content,
+                'category' => $article->category,
+                'created_at' => $article->created_at,
+                'url' => route('article.show', $article->id),
+            ];
+        });
+        return response()->json($lastArticles);
+    }
+
+    /** 
+     * Méthode pour l'API pour récupérer tous les articles
+     */
+    public function showAll()
+    {
+        $articles = Article::all()->map(function ($article) {
+            return [
+                'id' => $article->id,
+                'title' => $article->title,
+                'content' => $article->content,
+                'category' => $article->category,
+                'created_at' => $article->created_at,
+                'url' => route('article.show', $article->id),
+            ];
+        });
+
+        $articleCount = $articles->count();
+        return response()->json([
+            'articles' => $articles,
+            'total' => $articleCount
+        ]);
+    }
+
+    /**
+     * Méthode pour l'API pour récupérer un article en fonction de son id
+     */
+    public function oneArticleById(string $id)
+    {
+        $article = Article::findOrFail($id);
+        return view('articles.show', compact('article'));
     }
 
     /**

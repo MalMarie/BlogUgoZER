@@ -1,8 +1,8 @@
 <template>
     <div>
         <h2 class="mt-9 ml-9 text-2xl my-9 w-full text-center">
-    Tous les articles ( {{ totalArticles }})
-</h2>
+            Tous les articles ( {{ totalArticles }})
+        </h2>
         <div
             class="flex flex-row flex-wrap justify-center"
             v-if="articles.length > 0"
@@ -11,10 +11,12 @@
                 class="relative w-full max-w-96 bg-blue-600 m-4 p-4 rounded border-zinc-50 h-full max-h-80 overflow-y-auto shadow-lg text-slate-50"
                 v-for="(article, index) in articles"
                 :key="index"
+                @click="goToArticle(article.url)"
             >
                 <h2 class="text-xl text-bold mt-5 pb-3">{{ article.title }}</h2>
                 <p class="text-sm italic absolute top-3 right-3">
-                    {{ article.category }} | {{ formatDate(article.created_at) }}
+                    {{ article.category }} |
+                    {{ formatDate(article.created_at) }}
                 </p>
                 <p>{{ article.content }}</p>
             </div>
@@ -34,7 +36,7 @@ export default {
     data() {
         return {
             articles: [],
-            totalArticles: 0
+            totalArticles: 0,
         };
     },
     created() {
@@ -58,6 +60,9 @@ export default {
         },
         formatDate(date) {
             return format(new Date(date), "dd MMMM yyyy");
+        },
+        goToArticle(url) {
+            window.location.href = url;
         },
     },
 };
