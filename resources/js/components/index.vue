@@ -44,7 +44,7 @@ export default {
         async fetchLastArticles() {
             try {
                 const response = await axios.get(
-                    "http://localhost:8000/api/latest-articles"
+                    "api/latest-articles"
                 );
                 this.lastArticles = response.data;
                 console.log("liste des articles", this.lastArticles);

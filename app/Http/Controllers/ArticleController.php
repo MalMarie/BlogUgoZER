@@ -7,48 +7,139 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use Database\Factories\ArticleFactory;
-use Illuminate\Routing\Controllers\Middleware;
-use Illuminate\Routing\Controllers\HasMiddleware;
 
-class ArticleController extends Controller // implements HasMiddleware
+class ArticleController extends Controller
 {
+    //
+    // Partie client
+    //
+
     /**
-     * Display a listing of the resource.
+     * Méthode pour afficher l'accueil.
      */
     public function index()
     {
         return view('index');
     }
 
+    /**
+     * Méthode pour afficher la page de tous les articles
+     */
     public function allArticles()
     {
         return view('articles.articles');
     }
 
     /**
-     * Méthode pour afficher un seul article.
+     * Méthode pour récupérer un article en fonction de son id
      */
-    public function show(string $id)
+    public function oneArticleById(string $id)
     {
-        $article = Article::take($id)->get();
-        return view('article');
+        $article = Article::findOrFail($id);
+        return view('articles.show', compact('article'));
+    }
+
+
+
+    //
+    // Partie backoffice
+    //
+
+
+
+    /**
+     * Méthode pour afficher l'accueil du backoffice.
+     */
+    public function backIndex()
+    {
+        $articles = Article::all();
+        $articlesCount = $articles->count();
+        return view('backoffice.index', compact('articles'));
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Méthode pour afficher la page de création d'un article.
      */
     public function create()
     {
-        //
+        return view('backoffice.add');
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Méthode pour enregistrer le nouvel article.
      */
     public function store(Request $request)
     {
-        //
+        // dd('request', $request->all());
+
+        $validated = $request->validate([
+            'title' => 'required|max:120',
+            'content' => 'required',
+            'category' => 'required|max:50',
+            'image_url' => 'required|url',
+            'created_at' => now()
+        ]);
+
+        // dd('dd', $validated);
+
+        $newArticle = Article::create($validated);
+
+        return redirect()->route('backoffice.index')->with('success', 'Article créé avec succès.');
     }
+
+    /**
+     * Méthode pour afficher un article à modifer.
+     */
+    public function show(string $id)
+    {
+        $article = Article::findOrFail($id);
+        return view('articles.show', compact('article'));
+    }
+
+    /**
+     * Méthode pour afficher un article à modifer.
+     */
+    public function edit(string $id)
+    {
+        $article = Article::findOrFail($id);
+        return view('backoffice.edit', compact('article'));
+    }
+
+    /**
+     * Méthode pour enregistrer l'article modifié.
+     */
+    public function update(Request $request, string $id)
+    {
+        $validated = $request->validate([
+            'title' => 'required|max:120',
+            'content' => 'required',
+            'category' => 'required|max:50',
+            'image_url' => 'required|url',
+        ]);
+
+        $article = Article::findOrFail($id);
+        $article->update($validated);
+
+        return redirect()->route('backoffice.index')->with('success', 'Article modifié avec succès.');
+    }
+
+    /**
+     * Méthode pour supprimer un article.
+     */
+    public function destroy(string $id)
+    {
+        $article = Article::findOrFail($id);
+        $article->delete();
+        return redirect()->route('backoffice.index')->with('success', 'Article supprimé avec succès.');
+    }
+
+
+
+    //
+    // API
+    //
+
+
 
     /**
      * Méthode pour l'API pour récupérer les 5 derniers articles
@@ -79,6 +170,7 @@ class ArticleController extends Controller // implements HasMiddleware
                 'title' => $article->title,
                 'content' => $article->content,
                 'category' => $article->category,
+                'image_url' => $article->image_url,
                 'created_at' => $article->created_at,
                 'url' => route('article.show', $article->id),
             ];
@@ -90,49 +182,4 @@ class ArticleController extends Controller // implements HasMiddleware
             'total' => $articleCount
         ]);
     }
-
-    /**
-     * Méthode pour l'API pour récupérer un article en fonction de son id
-     */
-    public function oneArticleById(string $id)
-    {
-        $article = Article::findOrFail($id);
-        return view('articles.show', compact('article'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
-
-    /**
-     * Get the middleware that should be assigned to the controller.
-     */
-    // public static function middleware(): array
-    // {
-    //     return [
-    //         'auth',
-    //         new Middleware('log', only: ['index']),
-    //         new Middleware('subscribed', except: ['store']),
-    //     ];
-    // }
 }

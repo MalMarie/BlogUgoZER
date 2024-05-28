@@ -2,5 +2,6 @@
     <nav class="flex justify-evenly italic text-xl">
         <a href= {{ route('index') }} >Accueil</a>
         <a href= {{ route('articles') }} >Tous les articles</a>
+        <a href= {{ route('backoffice.index') }} >Backoffice</a>
     </nav>
 </div>

@@ -19,7 +19,7 @@ class Article extends Model
         'title',
         'content',
         'category',
-        'image',
+        'image_url',
         'created_at',
         'updated_at'
     ];

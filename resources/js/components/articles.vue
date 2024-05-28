@@ -22,7 +22,7 @@
             </div>
         </div>
         <div v-else>
-            <p>No articles available.</p>
+            <p>Pas d'articles disponibles.</p>
         </div>
     </div>
 </template>
@@ -40,13 +40,13 @@ export default {
         };
     },
     created() {
-        this.fetcharticles();
+        this.fetchArticles();
     },
     methods: {
-        async fetcharticles() {
+        async fetchArticles() {
             try {
                 const response = await axios.get(
-                    "http://localhost:8000/api/all-articles"
+                    "api/all-articles"
                 );
                 this.articles = response.data.articles;
                 this.totalArticles = response.data.total;

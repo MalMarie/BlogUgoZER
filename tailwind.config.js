@@ -1,15 +1,12 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  purge: [
-    './resources/views/**/*.blade.php',
-    './resources/js/**/*.vue',
-  ],
-  darkMode: false, // or 'media' or 'class'
-  theme: {
-    extend: {},
-  },
-  variants: {
-    extend: {},
-  },
-  plugins: [],
+    content: ["./resources/views/**/*.blade.php", "./resources/js/**/*.vue"], //changed because of @see https://tailwindcss.com/docs/upgrade-guide#configure-content-sources
+    // darkMode: false, // or 'media' or 'class' commented because @see https://tailwindcss.com/docs/upgrade-guide#remove-dark-mode-configuration
+    theme: {
+        extend: {},
+    },
+    variants: {
+        extend: {},
+    },
+    plugins: [],
 };
